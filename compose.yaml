@@ -1,0 +1,15 @@
+services:
+  mysql:
+    image: 'mysql:9.7'
+    environment:
+      MYSQL_DATABASE: techlab
+      MYSQL_USER: techlab
+      MYSQL_PASSWORD: techlab
+      MYSQL_ROOT_PASSWORD: root
+    ports:
+      - '3307:3306'
+    volumes:
+      - mysql-data:/var/lib/mysql
+
+volumes:
+  mysql-data:
