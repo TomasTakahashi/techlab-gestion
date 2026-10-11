@@ -4,11 +4,14 @@ import java.math.BigDecimal;
 import java.nio.charset.Charset;
 import java.util.Scanner;
 import java.util.function.Function;
+import java.util.regex.Pattern;
 
 import org.springframework.stereotype.Component;
 
 @Component
 public class EntradaConsola {
+
+    private static final Pattern FORMATO_PRECIO = Pattern.compile("\\d+(,\\d+)?");
 
     private final Scanner scanner = new Scanner(System.in,
             Charset.forName(System.getProperty("stdin.encoding"), Charset.defaultCharset()));
@@ -44,11 +47,11 @@ public class EntradaConsola {
 
     public BigDecimal leerPrecio(String mensaje) {
         return leer(mensaje, texto -> {
-            if (texto.contains(".")) {
+            if (!FORMATO_PRECIO.matcher(texto).matches()) {
                 throw new IllegalArgumentException();
             }
             return new BigDecimal(texto.replace(',', '.'));
-        }, "Precio inválido. Usá coma para los decimales y no uses separador de miles (ej: 1500,50).");
+        }, "Precio inválido. Ingresá solo números, con coma para los decimales (ej: 1500,50).");
     }
 
     public boolean confirmar(String mensaje) {
