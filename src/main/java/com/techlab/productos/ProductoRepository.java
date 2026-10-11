@@ -2,10 +2,11 @@ package com.techlab.productos;
 
 import java.util.List;
 
+import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 interface ProductoRepository extends JpaRepository<Producto, Long> {
     boolean existsByNombre(String nombre);
 
-    List<Producto> findByNombreContainingIgnoreCase(String texto);
+    List<Producto> findByNombreContainingIgnoreCase(String texto, Sort sort);
 }

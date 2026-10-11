@@ -17,6 +17,8 @@ import lombok.RequiredArgsConstructor;
 @Transactional(readOnly = true)
 public class ProductoService {
 
+    private static final Sort ORDEN_POR_NOMBRE = Sort.by("nombre");
+
     private final ProductoRepository productoRepository;
 
     @Transactional
@@ -29,7 +31,7 @@ public class ProductoService {
     }
 
     public List<Producto> listar() {
-        return productoRepository.findAll(Sort.by("nombre"));
+        return productoRepository.findAll(ORDEN_POR_NOMBRE);
     }
 
     public Producto buscarPorId(Long id) {
@@ -38,7 +40,7 @@ public class ProductoService {
     }
 
     public List<Producto> buscarPorNombre(String texto) {
-        return productoRepository.findByNombreContainingIgnoreCase(texto);
+        return productoRepository.findByNombreContainingIgnoreCase(texto, ORDEN_POR_NOMBRE);
     }
 
     @Transactional
